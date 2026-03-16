@@ -168,8 +168,8 @@ configure_sshd() {
     chown root:root /etc/ssh/sshd_config
     chmod 600 /etc/ssh/sshd_config
     sshd -t
-    systemctl enable ssh
-    systemctl restart ssh
+    systemctl enable ssh || true
+    systemctl restart ssh || true
 }
 
 setup_environment() {
@@ -181,8 +181,8 @@ setup_environment() {
     configure_apt_auto_updates
     systemctl enable unattended-upgrades || true
     systemctl start unattended-upgrades || true
-    systemctl enable apt-daily-upgrade.timer
-    systemctl start apt-daily-upgrade.timer
+    systemctl enable apt-daily-upgrade.timer || true
+    systemctl start apt-daily-upgrade.timer || true
     # configure sudoers
     echo '%'"${DEFAULT_ADMIN_USER}"' ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/10-admin-user
     chmod 0440 /etc/sudoers.d/10-admin-user
@@ -192,8 +192,8 @@ setup_environment() {
     cp ./config/jail.local /etc/fail2ban/jail.local
     # Ensure fail2ban matches our configured SSH port
     sed -i "s/^port[[:space:]]*=[[:space:]]*2022[[:space:]]*$/port    = ${SSH_PORT:-2022}/" /etc/fail2ban/jail.local || true
-    systemctl enable fail2ban
-    systemctl restart fail2ban
+    systemctl enable fail2ban || true
+    systemctl restart fail2ban || true
 
     # kernel hardening
     cp ./config/kernel_hardening.conf /etc/sysctl.d/99-kernel-hardening.conf
