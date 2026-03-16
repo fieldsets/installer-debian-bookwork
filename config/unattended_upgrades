@@ -1,0 +1,47 @@
+Unattended-Upgrade::Origins-Pattern {
+    "origin=Debian,codename=${distro_codename},label=Debian";
+    "origin=Debian,codename=${distro_codename},label=Debian-Security";
+    "origin=Debian,codename=${distro_codename}-security,label=Debian-Security";
+    // Enable stable updates (point releases)
+    "origin=Debian,codename=${distro_codename}-updates,label=Debian";
+    // Enable proposed updates (testing before point release)
+    "origin=Debian,codename=${distro_codename}-proposed-updates,label=Debian";
+    // Enable backports (newer software versions)
+    "o=Debian Backports,a=${distro_codename}-backports,l=Debian Backports";
+};
+Unattended-Upgrade::Package-Blacklist {
+    "linux-";
+    "libc6$";
+    "nginx";
+    "mysql-server";
+    "postgresql";
+};
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-WithUsers "true";
+Unattended-Upgrade::Automatic-Reboot-Time "05:00";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+Unattended-Upgrade::Remove-Unused-Dependencies "false";
+
+// Enable syslog logging (default: false)
+Unattended-Upgrade::SyslogEnable "true";
+
+// Syslog facility (default: daemon)
+Unattended-Upgrade::SyslogFacility "daemon";
+
+// Enable verbose output in logs
+Unattended-Upgrade::Verbose "true";
+
+// Enable debug output (very detailed)
+Unattended-Upgrade::Debug "false";
+
+Unattended-Upgrade::AutoFixInterruptedDpkg "true";
+
+// Install upgrades in minimal steps for SIGTERM interruption (default: true)
+Unattended-Upgrade::MinimalSteps "true";
+
+// Install upgrades during shutdown instead of in background
+Unattended-Upgrade::InstallOnShutdown "false";
+
+// Allow package downgrades if pin priority exceeds 1000
+Unattended-Upgrade::Allow-downgrade "false";

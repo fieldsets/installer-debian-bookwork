@@ -1,0 +1,67 @@
+[DEFAULT]
+bantime = 3600
+findtime = 600
+maxretry = 3
+maxmatches = %(maxretry)s
+ignoreself = true
+ignoreip = 127.0.0.1/8 ::1
+allowipv6 = true
+ignorecommand =
+
+backend = auto
+usedns = warn
+logencoding = auto
+
+enabled = false
+             
+mode = normal
+
+filter = %(__name__)s[mode=%(mode)s]
+
+destemail = root@localhost
+                
+sender = root@<fq-hostname>
+
+mta = sendmail
+
+protocol = tcp
+
+chain = <known/chain>
+
+port = 0:65535
+fail2ban_agent = Fail2Ban/%(fail2ban_version)s
+
+banaction = iptables-multiport
+banaction_allports = iptables-allports
+
+action_ = %(banaction)s[port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+
+action_mw = %(action_)s
+            %(mta)s-whois[sender="%(sender)s", dest="%(destemail)s", protocol="%(protocol)s", chain="%(chain)s"]
+
+action_mwl = %(action_)s
+             %(mta)s-whois-lines[sender="%(sender)s", dest="%(destemail)s", logpath="%(logpath)s", chain="%(chain)s"]
+
+action_xarf = %(action_)s
+             xarf-login-attack[service=%(__name__)s, sender="%(sender)s", logpath="%(logpath)s", port="%(port)s"]
+
+action_cf_mwl = cloudflare[cfuser="%(cfemail)s", cftoken="%(cfapikey)s"]
+                %(mta)s-whois-lines[sender="%(sender)s", dest="%(destemail)s", logpath="%(logpath)s", chain="%(chain)s"]
+
+action_blocklist_de  = blocklist_de[email="%(sender)s", service="%(__name__)s", apikey="%(blocklist_de_apikey)s", agent="%(fail2ban_agent)s"]
+
+action_abuseipdb = abuseipdb
+
+action = %(action_)s
+
+###
+# JAILS
+###
+
+[sshd]
+enabled = true
+port    = 2022
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+maxretry = 3
+bantime = 1800
