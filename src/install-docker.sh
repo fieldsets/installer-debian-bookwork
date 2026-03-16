@@ -21,6 +21,8 @@ apt-get install -y --no-install-recommends \
   docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 systemctl enable docker
+systemctl enable containerd || true
+systemctl restart containerd || true
 systemctl restart docker
 
 # Convenience: allow admin user to run docker without sudo (if user exists).

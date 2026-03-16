@@ -47,6 +47,7 @@ install_dependencies() {
         openssh-server openssh-client \
         rsync git curl wget gnupg2 lsb-release apt-transport-https ca-certificates software-properties-common \
         sudo unattended-upgrades apt-listchanges bsd-mailx net-tools apt-config-auto-update \
+        autossh \
         chrony \
         apparmor apparmor-utils \
         fail2ban
