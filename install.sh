@@ -50,6 +50,7 @@ install_dependencies() {
         autossh \
         chrony \
         apparmor apparmor-utils \
+        rsyslog \
         fail2ban
 }
 
