@@ -181,8 +181,12 @@ setup_environment() {
     configure_apt_auto_updates
     systemctl enable unattended-upgrades || true
     systemctl start unattended-upgrades || true
-    systemctl enable apt-daily-upgrade.timer || true
-    systemctl start apt-daily-upgrade.timer || true
+
+    # Respect systems where apt-daily-upgrade is explicitly masked.
+    if ! systemctl is-enabled apt-daily-upgrade.service 2>/dev/null | grep -qi masked; then
+        systemctl enable apt-daily-upgrade.timer || true
+        systemctl start apt-daily-upgrade.timer || true
+    fi
     # configure sudoers
     echo '%'"${DEFAULT_ADMIN_USER}"' ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/10-admin-user
     chmod 0440 /etc/sudoers.d/10-admin-user
