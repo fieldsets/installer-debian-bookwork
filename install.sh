@@ -179,8 +179,8 @@ setup_environment() {
     # configure unattended upgrades
     cp ./config/unattended_upgrades /etc/apt/apt.conf.d/50unattended-upgrades
     configure_apt_auto_updates
-    systemctl enable unattended-upgrades
-    systemctl start unattended-upgrades
+    systemctl enable unattended-upgrades || true
+    systemctl start unattended-upgrades || true
     systemctl enable apt-daily-upgrade.timer
     systemctl start apt-daily-upgrade.timer
     # configure sudoers
