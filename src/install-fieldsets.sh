@@ -16,3 +16,8 @@ cp ./env.example ./.env
 
 git pull origin main
 git submodule foreach --recursive git pull origin main
+
+if [ -d "/home/${DEFAULT_ADMIN_USER}/fieldsets" ]; then
+    rm -rf /home/${DEFAULT_ADMIN_USER}/fieldsets
+fi
+ln -s /usr/local/fieldsets/ /home/${DEFAULT_ADMIN_USER}/fieldsets
