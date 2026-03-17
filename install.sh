@@ -237,6 +237,7 @@ main() {
     run_script ./src/install-docker.sh
     run_script ./src/install-powershell.sh
     setup_environment
+    run_script ./src/install-fieldsets.sh
     echo "Installation completed successfully." | tee -a "$LOGFILE"
 }
 
