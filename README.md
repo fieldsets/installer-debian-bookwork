@@ -1,4 +1,4 @@
-## Debian Bookworm installer (Fieldsets)
+## Fieldsets Debian Installer (Debian 12 - Bookworm)
 
 This installer hardens a fresh **Debian 12 (Bookworm)** server and prepares it to run the Fieldsets framework. It configures SSH, automatic updates, a Docker-compatible firewall, fail2ban, and installs Docker Engine + PowerShell.
 
